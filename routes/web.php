@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/reports', [AdminController::class, 'reports'])->name('admin.reports');
         Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
         Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+        Route::get('/products/create', [ProductController::class, 'create'])->name('admin.products.create');
+
         // Add more admin-only routes here
     });
 });

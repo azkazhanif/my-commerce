@@ -86,7 +86,7 @@ const Index: React.FC<{ products: PaginatedProducts }> = ({ products }) => {
                                 </div>
 
                                 <Link
-                                    // href={route('admin.products.create')} // Ensure this route exists
+                                    href={route('admin.products.create')} // Ensure this route exists
                                     className="flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 font-medium text-white shadow-lg shadow-emerald-100 transition-all hover:bg-emerald-700 hover:shadow-emerald-200"
                                 >
                                     <Plus size={18} />
