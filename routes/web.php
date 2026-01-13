@@ -31,7 +31,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
         Route::get('/products/create', [ProductController::class, 'create'])->name('admin.products.create');
-
-        // Add more admin-only routes here
+        Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
     });
 });
