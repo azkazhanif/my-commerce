@@ -16,7 +16,13 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/login', [AdminController::class, 'login'])->name('admin.login');
-    Route::post('/login', [AdminController::class, 'signIn'])->name('admin.signin');
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::middleware(['guest'])->group(function () {
+        Route::get('/login', [AdminController::class, 'login'])->name('admin.login');
+        Route::post('/login', [AdminController::class, 'signIn'])->name('admin.signin');
+    });
+
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        // Add more admin-only routes here
+    });
 });

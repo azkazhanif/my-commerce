@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\Auth\LoginRequest;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
@@ -61,5 +62,15 @@ class AdminController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Index');
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('admin.login');
     }
 }
