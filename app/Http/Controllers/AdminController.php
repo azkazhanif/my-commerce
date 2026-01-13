@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\Auth\LoginRequest;
+use App\Http\Resources\ProductResource;
+use App\Services\ProductService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
@@ -74,9 +76,12 @@ class AdminController extends Controller
         return redirect()->route('admin.login');
     }
 
-    public  function products()
+    public  function products(ProductService $productService)
     {
-        return Inertia::render('Admin/Product/Index');
+        $products = $productService->getPaginatedProducts(25);
+        return Inertia::render('Admin/Product/Index', [
+            'products' => ProductResource::collection($products),
+        ]);
     }
 
     public  function orders()
