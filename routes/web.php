@@ -23,6 +23,11 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/products', [AdminController::class, 'products'])->name('admin.products');
+        Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
+        Route::get('/reports', [AdminController::class, 'reports'])->name('admin.reports');
+        Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
+        Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
         // Add more admin-only routes here
     });
 });

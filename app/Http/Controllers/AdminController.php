@@ -6,7 +6,7 @@ use App\Http\Requests\Admin\Auth\LoginRequest;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
@@ -72,5 +72,25 @@ class AdminController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('admin.login');
+    }
+
+    public  function products()
+    {
+        return Inertia::render('Admin/Product/Index');
+    }
+
+    public  function orders()
+    {
+        return Inertia::render('Admin/Order/Index');
+    }
+
+    public  function reports()
+    {
+        return Inertia::render('Admin/Report/Index');
+    }
+
+    public  function settings()
+    {
+        return Inertia::render('Admin/Settings/Index');
     }
 }
