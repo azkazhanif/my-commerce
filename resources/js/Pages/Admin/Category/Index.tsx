@@ -45,7 +45,11 @@ const Index: React.FC<{ categories: PaginatedCategories }> = ({
         <AdminLayout title="Categories">
             {/* Content Area */}
             <Content>
-                <TableToolbar />
+                <TableToolbar
+                    showFilter={false}
+                    createLabel="Add New Category"
+                    createLink={route('admin.products.create')}
+                />
                 <Table>
                     <TableHeader headers={headers} />
                     <TableBody>
