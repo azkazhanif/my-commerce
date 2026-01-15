@@ -12,12 +12,7 @@ use Illuminate\Support\Str;
 
 class ProductService
 {
-    protected $productRepository;
-
-    public function __construct(ProductRepository $productRepository)
-    {
-        $this->productRepository = $productRepository;
-    }
+    public function __construct(protected ProductRepository $productRepository) {}
 
     public function getPaginatedProducts(int $perPage = 25)
     {

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\Auth\LoginRequest;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
+use App\Services\CategoryService;
 use App\Services\ProductService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -81,6 +83,14 @@ class AdminController extends Controller
         $products = $productService->getPaginatedProducts(25);
         return Inertia::render('Admin/Product/Index', [
             'products' => ProductResource::collection($products),
+        ]);
+    }
+
+    public function categories(CategoryService $service)
+    {
+        $categories = $service->getPaginated(25);
+        return Inertia::render('Admin/Category/Index', [
+            'categories' => CategoryResource::collection($categories),
         ]);
     }
 

@@ -43,6 +43,12 @@ export const Sidebar = () => {
                     href="/admin/products"
                 />
                 <SidebarItem
+                    icon={<Package size={20} />}
+                    label="Categories"
+                    active={url === '/admin/categories'}
+                    href="/admin/categories"
+                />
+                <SidebarItem
                     icon={<BarChart3 size={20} />}
                     label="Sales Report"
                     active={url === '/admin/reports'}
