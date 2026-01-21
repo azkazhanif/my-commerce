@@ -48,7 +48,7 @@ const Index: React.FC<{ categories: PaginatedCategories }> = ({
                 <TableToolbar
                     showFilter={false}
                     createLabel="Add New Category"
-                    createLink={route('admin.products.create')}
+                    createLink={route('admin.categories.create')}
                 />
                 <Table>
                     <TableHeader headers={headers} />

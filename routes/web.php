@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -34,5 +35,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
 
         Route::get('/categories', [AdminController::class, 'categories'])->name('admin.categories');
+        Route::get('/categories/create', [CategoryController::class, 'create'])->name('admin.categories.create');
     });
 });
