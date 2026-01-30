@@ -49,7 +49,7 @@ export default function Create({ parents }: CreateCategoryProps) {
             .replace(/[^\w-]+/g, '');
 
         setData((prev) => ({ ...prev, slug: slug }));
-    }, [data.name]);
+    }, [data.name, setData]);
 
     // 4. Handle Image Preview
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -229,7 +229,7 @@ export default function Create({ parents }: CreateCategoryProps) {
                                             </option>
                                             {/* Pass 'parents' from controller: Category::all() */}
                                             {parents &&
-                                                parents.map((cat) => (
+                                                parents?.map((cat) => (
                                                     <option
                                                         key={cat.id}
                                                         value={cat.id}

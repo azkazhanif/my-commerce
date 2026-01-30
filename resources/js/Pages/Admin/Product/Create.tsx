@@ -23,7 +23,7 @@ interface CreateProps {
 
 export default function Create({ categories }: CreateProps) {
     // 1. Core Form Data
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, processing, errors } = useForm({
         name: '',
         description: '',
         category_id: '',
@@ -132,7 +132,7 @@ export default function Create({ categories }: CreateProps) {
         });
 
         setData('variants', newVariants);
-    }, [data.options]); // Re-run whenever options change
+    }, [data.options, data.price, setData]); // Re-run whenever options change
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -259,8 +259,7 @@ export default function Create({ categories }: CreateProps) {
 
                                 {/* Dynamic Option Builders */}
                                 <div className="space-y-6">
-                                    {data.options.map((option, index) => (
-                                        <div
+                                                                         {data.options.map((option) => (                                        <div
                                             key={option.id}
                                             className="relative rounded-xl border border-slate-100 bg-slate-50/50 p-4"
                                         >

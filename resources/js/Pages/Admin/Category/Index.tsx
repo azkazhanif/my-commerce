@@ -9,24 +9,31 @@ import TableHeader from '@/Components/Table/TableHeader';
 import TableRow from '@/Components/Table/TableRow';
 import TableToolbar from '@/Components/Table/TableToolbar';
 import AdminLayout from '@/Layouts/AdminLayout';
+import { Link, router } from '@inertiajs/react';
 import { Edit, Trash2 } from 'lucide-react';
 
 interface Category {
     id: number;
     name: string;
     slug: string;
+    children_count?: number;
+}
+
+interface PaginationLink {
+    url: string | null;
+    label: string;
+    active: boolean;
 }
 
 interface PaginatedCategories {
     data: Category[];
-    links: any[];
-    meta: any[];
-    from: number;
-    to: number;
-    total: number;
-    current_page: number;
-    last_page: number;
-    per_page: number;
+    links: PaginationLink[];
+    meta: {
+        from: number;
+        to: number;
+        total: number;
+        links: PaginationLink[];
+    };
 }
 
 const Index: React.FC<{ categories: PaginatedCategories }> = ({
@@ -37,9 +44,18 @@ const Index: React.FC<{ categories: PaginatedCategories }> = ({
             title: 'Name',
         },
         {
+            title: 'Children',
+        },
+        {
             title: 'Action',
         },
     ];
+
+    const handleDelete = (id: number) => {
+        if (confirm('Are you sure you want to delete this category?')) {
+            router.delete(route('admin.categories.destroy', id));
+        }
+    };
 
     return (
         <AdminLayout title="Categories">
@@ -56,9 +72,29 @@ const Index: React.FC<{ categories: PaginatedCategories }> = ({
                         {categories?.data?.map((category) => (
                             <TableRow key={category.id}>
                                 <RowBody>{category.name}</RowBody>
+                                <RowBody>
+                                    {category.children_count !== undefined
+                                        ? category.children_count
+                                        : '-'}
+                                </RowBody>
                                 <RowBody isFlex>
-                                    <ButtonIcon icon={<Edit size={18} />} />
-                                    <ButtonIcon icon={<Trash2 size={18} />} />
+                                    <Link
+                                        href={route(
+                                            'admin.categories.edit',
+                                            category.id,
+                                        )}
+                                    >
+                                        <ButtonIcon icon={<Edit size={18} />} />
+                                    </Link>
+                                    <button
+                                        onClick={() =>
+                                            handleDelete(category.id)
+                                        }
+                                    >
+                                        <ButtonIcon
+                                            icon={<Trash2 size={18} />}
+                                        />
+                                    </button>
                                 </RowBody>
                             </TableRow>
                         ))}
@@ -66,7 +102,7 @@ const Index: React.FC<{ categories: PaginatedCategories }> = ({
                             categories.data.length === 0) && (
                             <NoRows
                                 title="No available categories"
-                                colSpan={2}
+                                colSpan={3}
                             />
                         )}
                     </TableBody>

@@ -40,14 +40,19 @@ interface Product {
 
 interface PaginatedProducts {
     data: Product[];
-    links: any[];
-    meta: any[];
-    from: number;
-    to: number;
-    total: number;
-    current_page: number;
-    last_page: number;
-    per_page: number;
+    links: PaginationLink[];
+    meta: {
+        from: number;
+        to: number;
+        total: number;
+        links: PaginationLink[];
+    };
+}
+
+interface PaginationLink {
+    url: string | null;
+    label: string;
+    active: boolean;
 }
 
 const Index: React.FC<{ products: PaginatedProducts }> = ({ products }) => {

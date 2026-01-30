@@ -34,7 +34,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/products/create', [ProductController::class, 'create'])->name('admin.products.create');
         Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
 
-        Route::get('/categories', [AdminController::class, 'categories'])->name('admin.categories');
+        Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories');
         Route::get('/categories/create', [CategoryController::class, 'create'])->name('admin.categories.create');
+        Route::post('/categories', [CategoryController::class, 'store'])->name('admin.categories.store');
+        Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('admin.categories.edit');
+        Route::match(['put', 'patch'], '/categories/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
+        Route::post('/categories/{category}/update', [CategoryController::class, 'update'])->name('admin.categories.update_post'); // For file uploads spoofing
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
     });
 });
