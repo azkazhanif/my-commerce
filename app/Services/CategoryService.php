@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Repositories\CategoryRepository;
+use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -15,27 +16,20 @@ class CategoryService
 
     public function getPaginated(int $perPage = 25): LengthAwarePaginator
     {
-        // This was the old method, redirecting to new requirement (parents only for index usually, but keeping generic if needed)
-        return $this->repository->getPaginated($perPage);
-    }
-
-    public function getParentsPaginated(int $perPage = 25): LengthAwarePaginator
-    {
         return $this->repository->getParentsPaginated($perPage);
     }
 
-    public function getAllParents(): Collection
+    public function create(array $data): Category
     {
-        return $this->repository->getAllParents();
-    }
+        try {
+            if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
+                $data['image'] = $data['image']->store('categories', 'public');
+            }
 
-    public function createCategory(array $data): Category
-    {
-        if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
-            $data['image'] = $data['image']->store('categories', 'public');
+            return $this->repository->store($data);
+        } catch (Exception $e) {
+            throw new Exception('Error creating category: ' . $e->getMessage());
         }
-
-        return $this->repository->create($data);
     }
 
     public function updateCategory(Category $category, array $data): bool
@@ -56,10 +50,7 @@ class CategoryService
         if ($category->image) {
             Storage::disk('public')->delete($category->image);
         }
-        
-        // Also delete children images? Or prevent delete if children exist?
-        // For now, let's assume cascade delete is handled by DB or we just delete the category.
-        
+
         return $this->repository->delete($category);
     }
 

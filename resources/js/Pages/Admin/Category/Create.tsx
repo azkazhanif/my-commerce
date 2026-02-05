@@ -1,12 +1,6 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
-import {
-    ArrowLeft,
-    GitFork,
-    Image as ImageIcon,
-    Save,
-    Type,
-} from 'lucide-react';
+import { ArrowLeft, Image as ImageIcon, Save, Type } from 'lucide-react';
 import { ChangeEvent, FormEventHandler, useEffect, useState } from 'react';
 
 // 1. Define Types
@@ -154,19 +148,20 @@ export default function Create({ parents }: CreateCategoryProps) {
                                             </span>
                                         </label>
                                         <div className="flex items-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5">
-                                            <span className="mr-1 text-sm text-slate-400">
+                                            <span className="text-sm text-slate-400">
                                                 /categories/
                                             </span>
                                             <input
                                                 type="text"
                                                 value={data.slug}
+                                                disabled
                                                 onChange={(e) =>
                                                     setData(
                                                         'slug',
                                                         e.target.value,
                                                     )
                                                 }
-                                                className="w-full bg-transparent text-sm font-medium text-slate-600 focus:outline-none"
+                                                className="w-full border-0 bg-transparent p-0 text-sm font-medium text-slate-600 focus:outline-none"
                                                 placeholder="mens-fashion"
                                             />
                                         </div>
@@ -201,74 +196,6 @@ export default function Create({ parents }: CreateCategoryProps) {
 
                         {/* RIGHT COLUMN: Hierarchy & Media */}
                         <div className="space-y-8">
-                            {/* Hierarchy / Organization */}
-                            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                                <h3 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-500">
-                                    <GitFork size={16} />
-                                    Hierarchy
-                                </h3>
-
-                                <div className="space-y-4">
-                                    {/* Parent Category Select */}
-                                    <div>
-                                        <label className="mb-1 block text-sm font-medium text-slate-700">
-                                            Parent Category
-                                        </label>
-                                        <select
-                                            value={data.parent_id}
-                                            onChange={(e) =>
-                                                setData(
-                                                    'parent_id',
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
-                                        >
-                                            <option value="">
-                                                None (Top Level)
-                                            </option>
-                                            {/* Pass 'parents' from controller: Category::all() */}
-                                            {parents &&
-                                                parents?.map((cat) => (
-                                                    <option
-                                                        key={cat.id}
-                                                        value={cat.id}
-                                                    >
-                                                        {cat.name}
-                                                    </option>
-                                                ))}
-                                        </select>
-                                        <p className="mt-1 text-xs text-slate-400">
-                                            Select "None" if this is a main
-                                            category.
-                                        </p>
-                                    </div>
-
-                                    {/* Status Toggle */}
-                                    <div>
-                                        <label className="mb-1 block text-sm font-medium text-slate-700">
-                                            Visibility
-                                        </label>
-                                        <div className="flex items-center gap-3 rounded-xl border border-slate-200 p-3">
-                                            <input
-                                                type="checkbox"
-                                                checked={data.is_active}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        'is_active',
-                                                        e.target.checked,
-                                                    )
-                                                }
-                                                className="h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
-                                            />
-                                            <span className="text-sm text-slate-600">
-                                                Visible on site
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             {/* Image Upload */}
                             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                                 <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-slate-500">

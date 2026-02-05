@@ -17,11 +17,6 @@ class Category extends Model
         'parent_id',
         'description',
         'image',
-        'is_active',
-    ];
-
-    protected $casts = [
-        'is_active' => 'boolean',
     ];
 
     public function parent(): BelongsTo
