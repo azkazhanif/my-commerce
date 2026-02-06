@@ -1,10 +1,3 @@
-import Checkbox from '@/Components/Checkbox';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import Modal from '@/Components/Modal';
-import PrimaryButton from '@/Components/PrimaryButton';
-import SecondaryButton from '@/Components/SecondaryButton';
-import TextInput from '@/Components/TextInput';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, router, useForm } from '@inertiajs/react';
 import {
@@ -34,7 +27,6 @@ interface Category {
 
 interface EditCategoryProps {
     category: Category;
-    parents: Category[];
     children: Category[];
 }
 
@@ -49,11 +41,7 @@ interface CategoryForm {
     _method?: string;
 }
 
-export default function Edit({
-    category,
-    parents,
-    children,
-}: EditCategoryProps) {
+export default function Edit({ category, children }: EditCategoryProps) {
     // --- MAIN FORM ---
     const { data, setData, post, processing, errors } = useForm<CategoryForm>({
         name: category.name || '',
@@ -68,13 +56,6 @@ export default function Edit({
     const [previewUrl, setPreviewUrl] = useState<string | null>(
         category.image_url,
     );
-
-    // Auto-generate Slug from Name (only if slug is untouched or empty? logic depends on pref.
-    // Usually on Edit we don't auto-change slug unless user clears it or explicitly wants to).
-    // Let's keep it simple: only auto-generate if user types in name and slug was empty or matching previous name?
-    // Actually, on Edit, changing name shouldn't automatically change slug to avoid breaking SEO links.
-    // So I will REMOVE the auto-slug effect for the Main Edit Form, or make it manual.
-    // But I will keep it for the Child Create Modal.
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -374,11 +355,12 @@ export default function Edit({
                                                                     }
                                                                     className="rounded-lg border border-slate-200 p-1.5 text-slate-500 hover:bg-white hover:text-emerald-600 hover:shadow-sm"
                                                                 >
-                                                                                                                                         <EditIcon
-                                                                                                                                            size={
-                                                                                                                                                14
-                                                                                                                                            }
-                                                                                                                                        />                                                                </button>
+                                                                    <EditIcon
+                                                                        size={
+                                                                            14
+                                                                        }
+                                                                    />{' '}
+                                                                </button>
                                                                 <button
                                                                     type="button"
                                                                     onClick={() =>
@@ -417,79 +399,6 @@ export default function Edit({
 
                         {/* RIGHT COLUMN: Hierarchy & Media */}
                         <div className="space-y-8">
-                            {/* Hierarchy / Organization */}
-                            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                                <h3 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-500">
-                                    <GitFork size={16} />
-                                    Hierarchy
-                                </h3>
-
-                                <div className="space-y-4">
-                                    {/* Parent Category Select */}
-                                    <div>
-                                        <label className="mb-1 block text-sm font-medium text-slate-700">
-                                            Parent Category
-                                        </label>
-                                        <select
-                                            value={data.parent_id}
-                                            onChange={(e) =>
-                                                setData(
-                                                    'parent_id',
-                                                    e.target.value,
-                                                )
-                                            }
-                                            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
-                                        >
-                                            <option value="">
-                                                None (Top Level)
-                                            </option>
-                                            {/* Pass 'parents' from controller: Category::all() */}
-                                            {parents &&
-                                                parents.map((cat) => (
-                                                    <option
-                                                        key={cat.id}
-                                                        value={cat.id}
-                                                        // Prevent selecting self as parent
-                                                        disabled={
-                                                            cat.id ===
-                                                            category.id
-                                                        }
-                                                    >
-                                                        {cat.name}
-                                                    </option>
-                                                ))}
-                                        </select>
-                                        <p className="mt-1 text-xs text-slate-400">
-                                            Select "None" if this is a main
-                                            category.
-                                        </p>
-                                    </div>
-
-                                    {/* Status Toggle */}
-                                    <div>
-                                        <label className="mb-1 block text-sm font-medium text-slate-700">
-                                            Visibility
-                                        </label>
-                                        <div className="flex items-center gap-3 rounded-xl border border-slate-200 p-3">
-                                            <input
-                                                type="checkbox"
-                                                checked={data.is_active}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        'is_active',
-                                                        e.target.checked,
-                                                    )
-                                                }
-                                                className="h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
-                                            />
-                                            <span className="text-sm text-slate-600">
-                                                Visible on site
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             {/* Image Upload */}
                             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                                 <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-slate-500">

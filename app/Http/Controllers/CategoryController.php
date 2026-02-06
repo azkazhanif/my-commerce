@@ -32,8 +32,8 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         try {
-            $this->service->create($request->all());
-            return redirect()->route('admin.categories')->with('success', 'Category created successfully.');
+            $category = $this->service->create($request->all());
+            return redirect()->route('admin.categories.edit', $category->parent_id ?? $category->id)->with('success', 'Category created successfully.');
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Failed to create category: ' . $e->getMessage()])->withInput();
         }
@@ -44,7 +44,7 @@ class CategoryController extends Controller
         $category->load(['children']);
 
         return Inertia::render('Admin/Category/Edit', [
-            'category' => new CategoryResource($category),
+            'category' => (new CategoryResource($category))->resolve(),
             'children' => CategoryResource::collection($category->children)->resolve(),
         ]);
     }

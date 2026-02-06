@@ -1,13 +1,13 @@
-import Content from '@/Components/Admin/Content';
-import ButtonIcon from '@/Components/Button/ButtonIcon';
-import NoRows from '@/Components/Table/NoRows';
-import RowBody from '@/Components/Table/RowBody';
-import Table from '@/Components/Table/Table';
-import TableBody from '@/Components/Table/TableBody';
-import TableFooter from '@/Components/Table/TableFooter';
-import TableHeader from '@/Components/Table/TableHeader';
-import TableRow from '@/Components/Table/TableRow';
-import TableToolbar from '@/Components/Table/TableToolbar';
+import Content from '@/Components/Dashboard/Content';
+import ButtonIcon from '@/Components/UI/Button/ButtonIcon';
+import NoRows from '@/Components/UI/Table/NoRows';
+import RowBody from '@/Components/UI/Table/RowBody';
+import Table from '@/Components/UI/Table/Table';
+import TableBody from '@/Components/UI/Table/TableBody';
+import TableFooter from '@/Components/UI/Table/TableFooter';
+import TableHeader from '@/Components/UI/Table/TableHeader';
+import TableRow from '@/Components/UI/Table/TableRow';
+import TableToolbar from '@/Components/UI/Table/TableToolbar';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Edit, Trash2 } from 'lucide-react';
 

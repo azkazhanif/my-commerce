@@ -1,5 +1,5 @@
-import Header from '@/Components/Admin/Header';
-import { Sidebar } from '@/Components/Admin/Sidebar';
+import Header from '@/Components/Dashboard/Header';
+import { Sidebar } from '@/Components/Dashboard/Sidebar';
 import { Head } from '@inertiajs/react';
 
 interface AdminLayoutProps {

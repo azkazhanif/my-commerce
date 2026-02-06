@@ -1,4 +1,4 @@
-import { StatCard } from '@/Components/Admin/StatCard';
+import { StatCard } from '@/Components/Dashboard/StatCard';
 import AdminLayout from '@/Layouts/AdminLayout';
 
 const Index = () => {

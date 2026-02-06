@@ -3,26 +3,16 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import { ArrowLeft, Image as ImageIcon, Save, Type } from 'lucide-react';
 import { ChangeEvent, FormEventHandler, useEffect, useState } from 'react';
 
-// 1. Define Types
-interface Category {
-    id: number;
-    name: string;
-}
-
-interface CreateCategoryProps {
-    parents: Category[];
-}
-
 interface CategoryForm {
     name: string;
     slug: string;
-    parent_id: string; // string because select value usually comes as string
+    parent_id: string;
     description: string;
     image: File | null;
     is_active: boolean;
 }
 
-export default function Create({ parents }: CreateCategoryProps) {
+export default function Create() {
     // 2. Setup Form with Type
     const { data, setData, post, processing, errors } = useForm<CategoryForm>({
         name: '',
